@@ -1,0 +1,33 @@
+%p#notice= notice
+%h1 Listing Restaurants
+%ul
+  - @restaurants.each do |restaurant|
+    %li.johnsclass{ class: is_restaurant_open?(restaurant)}
+      ||||||||||||
+      / = restaurant.is_open?
+      = restaurant.workflow_state
+      ||||||||||||
+      = restaurant.name
+      = restaurant.description
+      = restaurant.address
+      = restaurant.city
+      = restaurant.state
+      = restaurant.zip
+      = restaurant.owner
+      = restaurant.opening
+      = link_to 'Show', restaurant_path(restaurant)
+      = link_to 'Edit', edit_restaurant_path(restaurant)
+      = link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' }
+      - if restaurant.closed?
+        = link_to "Open", open_restaurant_restaurant_path(restaurant), method: :patch
+        /= link_to "Construct", construct_restaurant_restaurant_path(restaurant), method: :patch
+        = link_to "Condemn", condemn_restaurant_restaurant_path(restaurant), method: :patch
+      - if restaurant.opened?
+        = link_to "Close", close_restaurant_restaurant_path(restaurant), method: :patch
+        = link_to "Condemn", condemn_restaurant_restaurant_path(restaurant), method: :patch
+      - if restaurant.under_construction?
+        = link_to "Open", open_restaurant_restaurant_path(restaurant), method: :patch
+        = link_to "Close", close_restaurant_restaurant_path(restaurant), method: :patch
+        = link_to "Condemn", condemn_restaurant_restaurant_path(restaurant), method: :patch
+
+%br
