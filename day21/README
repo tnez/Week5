@@ -12,6 +12,7 @@ $ rails g migration add_opening_and_owner_to_restaurants opening:date owner:stri
 $ rails g migration add_restaurant_id_to_foods restaurant_id:integer
 $ rails console
 
+some cool text.
 
 # localhost:3000/assets/funny_images/sup_foo.jpg
 # localhost:3000/assets/magic.jpg
@@ -36,3 +37,6 @@ $ rails console
 - ADd workflow_state as a string to your model
 - include Workflow (Model logic)
   - Build your state machine
+
+- Searching
+- This is how you it. Yadda yadda
