@@ -8,13 +8,9 @@ edit - GET
 update - PATCH
 destroy - DELETE
 
-This is some sweet information.
-
 $ rails g migration add_opening_and_owner_to_restaurants opening:date owner:string
 $ rails g migration add_restaurant_id_to_foods restaurant_id:integer
 $ rails console
-
-Oh my god. You guys really need to read it.
 
 # localhost:3000/assets/funny_images/sup_foo.jpg
 # localhost:3000/assets/magic.jpg
@@ -40,4 +36,4 @@ Oh my god. You guys really need to read it.
 - include Workflow (Model logic)
   - Build your state machine
 
-Woooooooo!
+- Searching
