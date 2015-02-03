@@ -1,0 +1,35 @@
+%ul.nav.navbar-nav
+  %li{class: active_link('welcome')}
+    / <li class="">
+    = link_to "Home", root_path
+  %li{class: active_link('restaurants')}
+    = link_to "Restaurants", restaurants_path
+  %li{class: active_link('foods')}
+    = link_to "Foods", foods_path
+  / %li.dropdown
+  /   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+  /     Dropdown
+  /     %b.caret
+  /   %ul.dropdown-menu
+  /     %li
+  /       %a{:href => "#"} Action
+  /     %li
+  /       %a{:href => "#"} Another action
+  /     %li
+  /       %a{:href => "#"} Something else here
+  /     %li.divider
+  /     %li.dropdown-header Nav header
+  /     %li
+  /       %a{:href => "#"} Separated link
+  /     %li
+  /       %a{:href => "#"} One more separated link
+%ul.nav.navbar-nav.navbar-right
+  - if current_user
+    %li
+      = link_to "Logout #{current_user.email}", destroy_user_session_path, method: :delete
+  - else
+    %li
+      = link_to 'Register', new_user_registration_path
+    %li
+      = link_to 'Login', new_user_session_path
+

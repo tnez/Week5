@@ -1,0 +1,11 @@
+.closed {
+  background-color: cornsilk;
+}
+
+.open {
+  background-color: cyan;
+}
+
+.johnsclass:hover {
+  background-color: grey;
+}

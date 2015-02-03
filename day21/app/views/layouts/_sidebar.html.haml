@@ -1,0 +1,6 @@
+%h1= params[:controller].capitalize
+= params.inspect
+%ul
+  %li
+    = link_to "Home Page", root_path
+  = render 'sidebar'

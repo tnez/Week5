@@ -1,0 +1,37 @@
+<br>
+<%= @food.inspect %>
+<br>
+<%= form_for [@food] do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+  <br>
+  <%= f.label :flavor %>
+  <%= f.text_field :flavor %>
+  <br>
+  <%= f.label :expired %>
+  <%= f.select :expired, options_for_select(Food::EXPIRED_OPTIONS, f.object.expired), include_blank: "--- Select ---" %>
+<!--   <select name="food[expired]">
+    <option value="true">True</option>
+    <option>False</option>
+  </select>
+ -->
+  <br>
+  <%= f.label :texture %>
+  <%= f.text_field :texture %>
+  <br>
+  <%= f.label :cost %>
+  <%= f.text_field :cost %>
+  <br>
+  <% @restaurants.each do |restaurant| %>
+    <%= check_box_tag 'food[restaurant_ids][]', restaurant.id, @food.restaurants.include?(restaurant) %>
+    <%= restaurant.name %>
+    <br>
+  <% end %>
+
+  <%= f.submit %>
+  |
+  <%= link_to "Cancel", foods_path %>
+<% end %>
