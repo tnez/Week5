@@ -13,6 +13,7 @@ class RestaurantsController < ApplicationController
   # GET /restaurants
   # GET /restaurants.json
   def index
+    # This is the filtering of restaurants based on name or description
     @restaurants = if !params[:q].blank?
       # search for the restaurants
       Restaurant.where("name LIKE ? OR description LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
