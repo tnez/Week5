@@ -5,7 +5,7 @@
       %br
   .form-group
     = f.label :name
-    = f.text_field :name, class: "form-control"
+    = f.text_field :name, class: "form-control validate-test"
   .form-group
     = f.label :description
     = f.text_area :description, class: "form-control"
@@ -33,4 +33,4 @@
       %label 
         = check_box_tag 'restaurant[food_ids][]', food.id, @restaurant.foods.include?(food)
         = food.name
-  = f.submit "Submit", class: "btn btn-primary"
+  = f.submit "Submit", class: "btn btn-primary disabled submit-things"
