@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  difficulty: MyString
+  probability: 1.5
+  description: MyText
+
+two:
+  name: MyString
+  difficulty: MyString
+  probability: 1.5
+  description: MyText
