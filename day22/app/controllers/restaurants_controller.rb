@@ -58,7 +58,7 @@ class RestaurantsController < ApplicationController
       flash[:notice] = 'Restaurant was successfully created.'
       redirect_to restaurants_path
     else
-      flash[:error] = "Restaurant was NOT saved."
+      flash[:alert] = "Restaurant was NOT saved."
       render :new
     end
   end
