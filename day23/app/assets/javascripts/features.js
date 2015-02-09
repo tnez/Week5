@@ -74,7 +74,7 @@ $(document).ready(function() {
       ctx.beginPath();
       ctx.moveTo(x,y);
       ctx.beginPath();
-      ctx.arc(x,y,min_dimension / 20.0,0,Math.PI*2,false);
+      ctx.arc(x,y,min_dimension / 20.0,0,Math.PI*2,true);
       ctx.strokeStyle = "rgba(0,0,0,0.75)";
       ctx.stroke();
       ctx.fill();
@@ -94,7 +94,7 @@ $(document).ready(function() {
   // rotate 1 degree every delay, starting at 90 degrees (top of wheel)
   var delay = 1;
   var max_delay = 100;
-  var stepSize = (Math.PI * 2) / 360.0;
+  var stepSize = Math.random() * (Math.PI*2)/100.0;
   var currentAngle = Math.PI * 0.5;
 
   // repeatedly call for the wheel to be drawn after a given delay
@@ -112,8 +112,8 @@ $(document).ready(function() {
         delay += Math.pow(delay, 1.80) / 750.0;
         spinWheel();
       } else {
-        $('.message>h2').html('The wheel hath spoke:<small> the winner is ' +
-                              findTheWinner(currentAngle,probs) + '!,</small>')
+        $('.message>h2').html('The wheel hath spoke: the winner is ' +
+                              findTheWinner(currentAngle,probs) + '!')
       }
     }, delay );
   }
@@ -137,6 +137,7 @@ $(document).ready(function() {
     // check everything else
     minIdx = 0;
     minError = squaredErr(targetAngle,currentAngle);
+    console.log(currentAngle,targetAngle,minError);    
     // loop through our probability vector, and find the element with
     // the minimum distance between itself and the target vector
     for(i=1; i<probs.length; i++) {
@@ -158,6 +159,8 @@ $(document).ready(function() {
   // start that wheel-a-spinnin'
   $(".spin-the-wheel").click( function () {
     delay = 1;
+    stepSize = Math.random() * (Math.PI*2)/100.0;
+    currentAngle = Math.PI * 0.5;
     $('.message>h2').html('Watch it go!!!')
     spinWheel();
   });
