@@ -9,10 +9,9 @@ You must do:
 %span.task
   Something.
 
-%ul
+%ul.hidden
   - @features.shuffle.each do |feature|
-    %li
-      %input.description{ type: "hidden", value: feature.description}
-      = feature.name
-      = feature.difficulty
-      / = feature.description
+    %li{data: { id: feature.id, name: feature.name, difficulty: feature.difficulty, description: feature.description}}
+
+.spinningWheel
+  %canvas{width: 600, height: 600}
