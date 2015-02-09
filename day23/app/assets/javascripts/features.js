@@ -73,10 +73,15 @@ $(document).ready(function() {
       ctx.stroke();
       ctx.beginPath();
       ctx.moveTo(x,y);
+      ctx.beginPath();
       ctx.arc(x,y,min_dimension / 20.0,0,Math.PI*2,false);
-      ctx.strokeStyle = "rgba(0,0,0,0.75)";      
+      ctx.strokeStyle = "rgba(0,0,0,0.75)";
       ctx.stroke();
       ctx.fill();
+      ctx.font = '10pt Calibri';
+      ctx.fillStyle = "rgba(0,0,0,0.80)";
+      ctx.textAlign = 'center';
+      ctx.fillText(idx,x,y);
       currentAngle += probs[idx] * Math.PI*2;
     };
   };
@@ -107,9 +112,44 @@ $(document).ready(function() {
         delay += Math.pow(delay, 1.80) / 750.0;
         spinWheel();
       } else {
-        $('.message>h2').html('The wheel hath spoke:')
+        $('.message>h2').html('The wheel hath spoke:<small> the winner is ' +
+                              findTheWinner(currentAngle,probs) + '!,</small>')
       }
     }, delay );
+  }
+
+  // return the squared error between two numbers
+  function squaredErr(a,b) {
+    return Math.pow(b-a,2);
+  }
+  
+  // given our original set of probabilities and our current angle,
+  // return the winning list element
+  function findTheWinner(currentAngle,probs) {
+    // our target angle is the top of our wheel at 270 degrees
+    // (Math.PI*1.5)
+    targetAngle = Math.PI*1.5;
+    // normalize our current angle (it has gone around a bunch of
+    // times and we need to know in terms of the range 0 - 360)
+    currentAngle = currentAngle % (Math.PI*2);
+    // assume the winner is the first element, this is probably not
+    // the case, but it doesn't hurt to assume as long as we properly
+    // check everything else
+    minIdx = 0;
+    minError = squaredErr(targetAngle,currentAngle);
+    // loop through our probability vector, and find the element with
+    // the minimum distance between itself and the target vector
+    for(i=1; i<probs.length; i++) {
+      // bump up the current angle according to the probability at
+      // point
+      currentAngle += Math.PI*2 * probs[i];
+      currentErr = squaredErr(targetAngle,currentAngle);
+      if ( currentErr < minError ) {
+        minIdx = i;
+        minError = currentErr;
+      }
+    }
+    return minIdx;
   }
 
   // draw dat wheel
