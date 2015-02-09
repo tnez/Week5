@@ -2,6 +2,70 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import url(http://fonts.googleapis.com/css?family=Bangers);
+@import url(http://fonts.googleapis.com/css?family=Reenie+Beanie);
+
+body {
+    background-image:url(Airplane_vortex_edit.jpg);
+    background-color: transparent;
+    background-position: 0% 90%;
+  padding: 0;
+  margin: 0;
+  font-family: 'Reenie Beanie', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  color: #FFF;
+  text-align: center;
+  height: 100%;
+  font-size: 1.5em;
+}
+
+h1 {
+    font-family: 'Bangers', helvetica, sans-serif;
+    font-size: 2em;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 2em;
+}
+
+a {
+    text-decoration: underline;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
 li.selected {
   background-color: red;
 }
+
+.pointer {
+    font-family: helvetica;
+    margin-top: 10px;
+    margin-bottom: -25px;
+}
+
+.spinningWheel {
+  min-width: 360px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+canvas {
+  width: 90%;
+  height: 90%;
+  max-height: 440px;
+  max-width: 440px;
+}
+

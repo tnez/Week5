@@ -1,17 +1,22 @@
-%h1 Wheel of Misfortune!
-%h3 YOUR DESTINY AWAITS
+%h1
+  Wheel of Misfortune!
+%h3
+  your destiny awaits
 
-= link_to "Add/Edit/Remove Features", features_path
-%br
+-# = link_to "Add/Edit/Remove Features", features_path
+-# %br
 %a.spin-the-wheel Spin the Wheel!
-%br
-You must do:
-%span.task
-  Something.
+
+.pointer
+  %span v
 
 %ul.hidden
   - @features.shuffle.each do |feature|
     %li{data: { id: feature.id, name: feature.name, difficulty: feature.difficulty, description: feature.description}}
 
 .spinningWheel
-  %canvas{width: 600, height: 600}
+  %canvas{width: 550, height: 550}
+
+.message
+  %h2
+

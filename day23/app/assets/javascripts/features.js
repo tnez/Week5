@@ -70,9 +70,12 @@ $(document).ready(function() {
       ctx.beginPath();
       ctx.moveTo(originX,originY);
       ctx.lineTo(x,y);
-      ctx.stroke();      
+      ctx.stroke();
+      ctx.beginPath();
       ctx.moveTo(x,y);
       ctx.arc(x,y,min_dimension / 20.0,0,Math.PI*2,false);
+      ctx.strokeStyle = "rgba(0,0,0,0.75)";      
+      ctx.stroke();
       ctx.fill();
       currentAngle += probs[idx] * Math.PI*2;
     };
@@ -104,7 +107,7 @@ $(document).ready(function() {
         delay += Math.pow(delay, 1.80) / 750.0;
         spinWheel();
       } else {
-        $('canvas').after('<h2>That wheel done stopped</h2>')
+        $('.message>h2').html('The wheel hath spoke:')
       }
     }, delay );
   }
@@ -115,6 +118,7 @@ $(document).ready(function() {
   // start that wheel-a-spinnin'
   $(".spin-the-wheel").click( function () {
     delay = 1;
+    $('.message>h2').html('Watch it go!!!')
     spinWheel();
   });
 });
