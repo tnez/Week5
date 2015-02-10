@@ -42,6 +42,64 @@ $(document).ready(function() {
   // Forces a click event to execute.
   // $(".spin-the-wheel").click();
 
+  // Create a function that defines a feature node. A feature node
+  // has: {top,bottom,left,right,x,y,$element} defining the bounds of
+  // the element in the context of the canvas as well as the hidden
+  // feature list item that it is associated with.
+  var FeatureNode = function(x,y,angle,radius,$element) {
+    // define primary properties
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.angle = angle;
+    // associate element
+    this.$element = $element;    
+    // Define boundaries in context of canvas.  Note that origin is
+    // bottom left!
+    this.top = y - radius;
+    this.bottom = y + radius;
+    this.left = x - radius;
+    this.right = x + radius;
+  };
+
+  // Draw a feature node
+  function drawFeatureNode(ctx,featureNode) {
+    // TODO: set fill and stroke properties
+    ctx.strokeStyle = "#FFF";
+    ctx.lineWidth = 5;
+    ctx.fillStyle = "rgba(255,255,255,0.75)";
+    // move to x,y and begin path
+    ctx.moveTo(featureNode.x,featureNode.y);
+    ctx.beginPath();
+    // draw circle
+    ctx.arc(featureNode.x,featureNode.y,featureNode.radius,0,Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+    // DEBUG: put element ID in circle so we can check that the
+    // correct element is picked
+    ctx.fillStyle = "rgba(0,0,0,0.80)";
+    ctx.textAlign = 'center';
+    ctx.fillText(featureNode.$element.getAttribute('data-id'),featureNode.x,featureNode.y);
+  }
+
+  // Given a feature node, draw the edge from the origin to given
+  // feature node
+  function drawFeatureEdge(ctx,wOrigin,wRadius,featureNode) {
+    // get x,y for edge
+    angle = featureNode.angle;    
+    x = wOrigin[0] + (wRadius-featureNode.radius) * Math.cos(angle);
+    y = wOrigin[1] + (wRadius-featureNode.radius) * Math.sin(angle);
+    // TODO: set stroke properties
+    ctx.strokeStyle = "rgba(255,255,255,0.25)";
+    ctx.lineWidth = 3;
+    ctx.beginPath();    
+    // move to the center of the canvas
+    ctx.moveTo(wOrigin[0],wOrigin[1]);
+    // draw edge
+    ctx.lineTo(x,y);
+    ctx.stroke();
+    ctx.fill();
+  }
 
   // create a function to draw a wheel at a given angle
   function drawWheel(canvas, probs, colors, startAngle) {
@@ -52,42 +110,50 @@ $(document).ready(function() {
     originY = canvas.height / 2.0;
     min_dimension = Math.min(height,width);
     radius = min_dimension * 0.5 * 0.75;
-    // current angle (initialize to zero)
+    // initialize current angle
     currentAngle = startAngle;
     // get the canvas on which we are to draw
     ctx = canvas.getContext("2d");
     // clear the canvas
     ctx.clearRect(0,0,height,width);
+    // clear our list of feature nodes (they will have new positions)
+    featureNodes = [];
     // loop through the data and draw each item    
     for (var idx=0; idx < probs.length; idx++) {
       // get (x,y) given our angle shifting proportionally
       x = originX + radius * Math.cos(currentAngle);
       y = originY + radius * Math.sin(currentAngle);
-      // setup styles
-      ctx.fillStyle = "rgba(255,255,255,1.0)";
-      ctx.strokeStyle = "rgba(255,255,255,0.25)";
-      ctx.lineWidth = 5;
-      ctx.beginPath();
-      ctx.moveTo(originX,originY);
-      ctx.lineTo(x,y);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(x,y);
-      ctx.beginPath();
-      ctx.arc(x,y,min_dimension / 20.0,0,Math.PI*2,true);
-      ctx.strokeStyle = "rgba(0,0,0,0.75)";
-      ctx.stroke();
-      ctx.fill();
-      ctx.font = '10pt Calibri';
-      ctx.fillStyle = "rgba(0,0,0,0.80)";
-      ctx.textAlign = 'center';
-      ctx.fillText(idx,x,y);
+      // create a new featureNode
+      newFeatureNode = new FeatureNode(x,y,currentAngle,30.0,$features[idx]);
+      featureNodes.push(newFeatureNode);
+      // draw edge and node
+      // console.log(newFeatureNode);
+      drawFeatureEdge(ctx,[originX,originY],radius,newFeatureNode);
+      drawFeatureNode(ctx,newFeatureNode);
+      // update the angle
       currentAngle += probs[idx] * Math.PI*2;
     };
   };
 
+  // determine the winning element, in our case the winning element
+  // will be the element with the smallest Y value.
+  var getWinningElement = function() {
+    // assumet that the first element wins (heck, maybe it did)
+    bestNode = featureNodes[0];
+    // then loop through the rest of the nodes and keep note of the
+    // best that we find
+    for (i=1; i<featureNodes.length; i++) {
+      thisNode = featureNodes[i];
+      if (thisNode.y < bestNode.y) {
+        bestNode = thisNode;
+      }
+    }
+    return bestNode;
+  }
+
   // setup wheel params
   var $features = $('ul>li')
+  var featureNodes = [];
   var canvas = $('canvas')[0];
   var probs = $features.map( function() { return 1.0 / $features.length });
   // var colors = ['red','yellow','blue','green','yellow','blue'];
@@ -112,48 +178,13 @@ $(document).ready(function() {
         delay += Math.pow(delay, 1.80) / 750.0;
         spinWheel();
       } else {
-        $('.message>h2').html('The wheel hath spoke: the winner is ' +
-                              findTheWinner(currentAngle,probs) + '!')
+        $('.message>h2').html('The wheel hath spoke: ' + getWinningElement().$element.getAttribute('data-description'));
       }
     }, delay );
   }
-
-  // return the squared error between two numbers
-  function squaredErr(a,b) {
-    return Math.pow(b-a,2);
-  }
   
-  // given our original set of probabilities and our current angle,
-  // return the winning list element
-  function findTheWinner(currentAngle,probs) {
-    // our target angle is the top of our wheel at 270 degrees
-    // (Math.PI*1.5)
-    targetAngle = Math.PI*1.5;
-    // normalize our current angle (it has gone around a bunch of
-    // times and we need to know in terms of the range 0 - 360)
-    currentAngle = currentAngle % (Math.PI*2);
-    // assume the winner is the first element, this is probably not
-    // the case, but it doesn't hurt to assume as long as we properly
-    // check everything else
-    minIdx = 0;
-    minError = squaredErr(targetAngle,currentAngle);
-    console.log(currentAngle,targetAngle,minError);    
-    // loop through our probability vector, and find the element with
-    // the minimum distance between itself and the target vector
-    for(i=1; i<probs.length; i++) {
-      // bump up the current angle according to the probability at
-      // point
-      currentAngle += Math.PI*2 * probs[i];
-      currentErr = squaredErr(targetAngle,currentAngle);
-      if ( currentErr < minError ) {
-        minIdx = i;
-        minError = currentErr;
-      }
-    }
-    return minIdx;
-  }
-
   // draw dat wheel
+  ctx = $('canvas')[0].getContext("2d");
   drawWheel(canvas, probs, 0, -Math.PI*0.5);
 
   // start that wheel-a-spinnin'
