@@ -5,22 +5,6 @@
 @import url(http://fonts.googleapis.com/css?family=Bangers);
 @import url(http://fonts.googleapis.com/css?family=Reenie+Beanie);
 
-body {
-    background-image:url(Airplane_vortex_edit.jpg);
-    background-color: transparent;
-    background-position: 0% 90%;
-  padding: 0;
-  margin: 0;
-  font-family: 'Reenie Beanie', Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1;
-  color: #FFF;
-  text-align: center;
-  height: 100%;
-  font-size: 1.5em;
-}
-
 h1 {
     font-family: 'Bangers', helvetica, sans-serif;
     font-size: 2em;
@@ -28,13 +12,15 @@ h1 {
     margin-bottom: 0;
 }
 
-h3 {
+h2, h3 {
+    font-family: 'Reenie Beanie', Helvetica, Arial, sans-serif;
     margin-top: 0;
     margin-bottom: 0;
     font-size: 2em;
 }
 
 a {
+    font-family: 'Reenie Beanie', Helvetica, Arial, sans-serif;
     text-decoration: underline;
 }
 
