@@ -16,11 +16,20 @@
 
 /* setup background image */
 html {
-    background: url(Airplane_vortex_edit.jpg) no-repeat center center fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),
+    url(Airplane_vortex_edit.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;    
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;
+
 }
 
 body {
