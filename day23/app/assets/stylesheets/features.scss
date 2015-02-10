@@ -7,21 +7,25 @@
 
 h1 {
     font-family: 'Bangers', helvetica, sans-serif;
-    font-size: 2em;
-    margin-top: 20px;
+    font-size: 2.8em;
+    margin-top: 0.6em;
     margin-bottom: 0;
+    text-shadow: rgba(255,255,255,0.25) 4px 4px 16px;
 }
 
 h2, h3 {
     font-family: 'Reenie Beanie', Helvetica, Arial, sans-serif;
+    color: rgba(255,255,255,0.50);
     margin-top: 0;
     margin-bottom: 0;
     font-size: 2em;
 }
 
 a {
-    font-family: 'Reenie Beanie', Helvetica, Arial, sans-serif;
+    font-family: 'Reenie Beanie', Helvetica, Arial, sans-serif;    
     text-decoration: underline;
+    color: rgba(255,255,255,0.75);
+    font-size: 1.2em;
 }
 
 a:hover {
@@ -39,13 +43,15 @@ li.selected {
 .pointer {
     font-family: helvetica;
     margin-top: 10px;
-    margin-bottom: -25px;
+    margin-bottom: -20px;
+    color: rgba(255,255,255,0.15);
 }
 
 .spinningWheel {
   min-width: 360px;
   max-width: 650px;
   margin: 0 auto;
+  margin-top: 0.4em;
 }
 
 canvas {
@@ -55,3 +61,7 @@ canvas {
   max-width: 440px;
 }
 
+.message {
+    max-width: 660px;
+    margin: 0 auto;
+}

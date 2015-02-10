@@ -7,16 +7,16 @@
 -# %br
 %a.spin-the-wheel Spin the Wheel!
 
-.pointer
-  %span v
 
 %ul.hidden
   - @features.shuffle.each do |feature|
     %li{data: { id: feature.id, name: feature.name, difficulty: feature.difficulty, description: feature.description}}
 
 .spinningWheel
+  .pointer
+    %span v
   %canvas{width: 550, height: 550}
 
 .message
-  %h2
+  %h2 rollin' wit teh homies
 
