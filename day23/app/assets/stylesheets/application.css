@@ -10,32 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require foundation_and_overrides
  *= require_tree .
  *= require_self
  */
-
-/* setup background image */
-html {
-    position: fixed;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),
-    url(Airplane_vortex_edit.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;    
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-    font-size: 1.5em;
-    color: #FFF;
-}
